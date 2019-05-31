@@ -3,14 +3,56 @@ import { GraphQLServer } from "graphql-yoga";
 // 5 Scalar Types
 // String, Boolean, Int, Float, ID,
 
+const users = [
+    {
+        id: '1',
+        name: 'g',
+        email: '1@gmail.com',
+        age: 21
+    },
+    {
+        id: '2',
+        name: 'name2',
+        email: '2@gmail.com',
+        age: 21
+    },
+    {
+        id: '3',
+        name: 'name3',
+        email: '3@gmail.com',
+        age: 21
+    }
+]
+
+const posts = [
+    {
+        id: '1',
+        title: 'A new hope',
+        body: 'A good moview for sure',
+        published: 1978
+    },
+    {
+        id: '2',
+        title: 'Jedi remix',
+        body: 'A good moview for sure',
+        published: 1979
+    },
+    {
+        id: '1',
+        title: 'Clone Wars',
+        body: 'A good moview for sure',
+        published: 2005
+    },
+]
+
 
 // type definitions (schema)
 const typeDefs = `
     type Query {
-        greeting(name: String!): String!
+        users(query: String): [User]!
+        posts(query: String): [Post]!
         me: User!
         post: Post!
-        add(num1: Int, num2: Int): String!
     }
 
     type User {
@@ -31,11 +73,26 @@ const typeDefs = `
 // resolvers
 const resolvers = {
     Query: {
-        greeting(parent, args, ctx, info) {
-            return 'Hello ' + args.name
+        users(parent, args, ctx) {
+            if(!args.query) {
+                return users
+            } else {
+                return users.filter((user) => {
+                    return user.name.toLowerCase().includes(args.query.toLowerCase())
+                })
+            }
         },
-        add(parent, args, ctx, info){
-            return args.num1 + args.num2
+        posts(parent, args, ctx) {
+            if(!args.query) {
+                return posts
+            } else {
+                return posts.filter((post) => {
+                    const titleMatch = post.title.toLowerCase().includes(args.query.toLowerCase())
+                    const bodyMatch = post.body.toLowerCase().includes(args.query.toLowerCase())
+
+                    return titleMatch || bodyMatch
+                })
+            }
         },
         me() {
             return {
