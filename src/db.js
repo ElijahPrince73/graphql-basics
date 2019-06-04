@@ -55,7 +55,7 @@ const comments = [{
     post: '12'
 }]
 
-const db ={
+const db = {
     users,
     posts,
     comments
