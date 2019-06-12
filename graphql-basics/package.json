@@ -4,25 +4,19 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "nodemon src/index.js --exec babel-node"
-  },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/ElijahPrince73/graphql-basics.git"
+    "start": "nodemon src/index.js --ext js,graphql --exec babel-node",
+    "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "",
   "license": "ISC",
-  "bugs": {
-    "url": "https://github.com/ElijahPrince73/graphql-basics/issues"
-  },
-  "homepage": "https://github.com/ElijahPrince73/graphql-basics#readme",
   "dependencies": {
     "babel-cli": "^6.26.0",
     "babel-plugin-transform-object-rest-spread": "^6.26.0",
     "babel-preset-env": "^1.7.0",
-    "graphql-yoga": "^1.17.4",
-    "nodemon": "^1.19.1",
+    "graphql-yoga": "^1.14.10",
     "uuid": "^3.3.2"
+  },
+  "devDependencies": {
+    "nodemon": "^1.17.5"
   }
 }
