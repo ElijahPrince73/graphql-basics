@@ -1,15 +1,24 @@
-import uuidv4 from 'uuid/v4'
+import bcrypt from 'bcryptjs'
 
 const Mutation = {
-    createUser(parent, args, { prisma }, info) {
-        const emailTaken = prisma.exists.User({ email: args.data.email })
+    async createUser(parent, args, { prisma }, info) {
+        const emailTaken = await prisma.exists.User({ email: args.data.email })
 
         if (emailTaken) {
             throw new Error('Email taken')
         }
 
+        if(args.data.password.length < 3) {
+            throw new Error('Must be 3 character or longer')
+        }
+
+        const password = await bcrypt.hash(args.data.password, 10)
+
         return prisma.mutation.createUser({
-            data: args.data
+            data: {
+                ...args.data,
+                password
+            }
         }, info)
     },
     deleteUser(parent, args, { prisma }, info) {
