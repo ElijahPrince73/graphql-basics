@@ -21,7 +21,7 @@ const Mutation = {
             token: jwt.sign({ userId: user.id }, 'thisisasecret')
         }
     },
-    async login(parent, args, { prisma }, info) {
+    async loginUser(parent, args, { prisma }, info) {
         const user = await prisma.query.user({
             where: {
                 email: args.data.email
