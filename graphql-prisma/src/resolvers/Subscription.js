@@ -1,4 +1,5 @@
 import { Prisma } from "prisma-binding";
+import getUserId from '../utils/getUserId'
 
 const Subscription = {
     comment: {
@@ -20,6 +21,22 @@ const Subscription = {
                 where: {
                     node: {
                         published: true
+                    }
+                }
+            }, info)
+        }
+    },
+    myPost: {
+        subscribe(parent, args, { prisma, request }, info) {
+            const userId = getUserId(request)
+
+            return prisma.subscription.post({
+                where: {
+                    node: {
+                        published: true,
+                        author: {
+                            id: userId,
+                        }
                     }
                 }
             }, info)
