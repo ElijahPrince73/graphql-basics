@@ -1,9 +1,8 @@
-import { Prisma } from "prisma-binding";
 import getUserId from '../utils/getUserId'
 
 const Subscription = {
     comment: {
-        subscribe(parent, { postId }, { prisma }, info) {
+        subscribe(parent, { postId }, { prisma }, info){
             return prisma.subscription.comment({
                 where: {
                     node: {
@@ -33,9 +32,8 @@ const Subscription = {
             return prisma.subscription.post({
                 where: {
                     node: {
-                        published: true,
                         author: {
-                            id: userId,
+                            id: userId
                         }
                     }
                 }
