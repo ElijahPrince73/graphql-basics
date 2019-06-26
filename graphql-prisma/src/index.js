@@ -1,3 +1,5 @@
+import "core-js/stable"
+import "regenerator-runtime/runtime"
 import { GraphQLServer, PubSub } from 'graphql-yoga'
 import db from './db'
 import { resolvers, fragmentReplacements } from './resolvers/index'
@@ -19,6 +21,6 @@ const server = new GraphQLServer({
     fragmentReplacements
 })
 
-server.start(() => {
+server.start({ port: process.env.PORT || 4000 }, () => {
     console.log('The server is up!')
 })
